@@ -6,6 +6,7 @@ import styled from "styled-components";
 import {ReactComponent as Search} from './search.svg'
 import { ReactComponent as User } from './user.svg'
 import {ReactComponent as Logo} from './logo.svg'
+import axios from 'axios';
 const StyledSearch = styled(Search)`
   width:fit-content;
 `
@@ -43,6 +44,17 @@ export default class App extends Component {
   }
   componentDidMount(){
     document.addEventListener("keyup", this.keyUp.bind(this)); 
+    axios({
+      method: 'post',
+      url: "http://localhost:9000/" + 'api/test',
+    })
+    .then((res)=>{
+      console.log(res)
+      this.setState({value:res.data.value})
+    })
+    .catch((error)=>{
+        console.log(error);
+    });
   }
   keyUp(e){
     if(e.keyCode==13)this.onSubmit();
@@ -52,7 +64,7 @@ export default class App extends Component {
       <div className="App">
       <header className="App-header">
         <Container >
-          <Input label="Search..." icon={StyledSearch} onChange={this.onChange}/>
+          <Input value={this.state.value} label="Search..." icon={StyledSearch} onChange={this.onChange}/>
         </Container>
       </header>
     </div>
