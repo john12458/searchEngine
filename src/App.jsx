@@ -7,17 +7,27 @@ import {ReactComponent as Search} from './search.svg'
 import { ReactComponent as User } from './user.svg'
 import {ReactComponent as Logo} from './logo.svg'
 import axios from 'axios';
+import Dashboard from './componant/Dashboard';
 const StyledSearch = styled(Search)`
   width:fit-content;
 `
+const InputContainer = styled.div`
+  position:${props=>props.display?'sticky':'unset'};
+  top:0;
+  width:auto;
+  background-color:#282c34;
+`;
+const DashboardContainer = styled.div`
+display:${props=>props.display?'block':'none'};
+padding:0px 20px;
+`;
+
 const Container = styled.div`
   width:90%;
   height:100%;
   text-align:center;
-  display:flex;
+  display:inline-flex;
   flex-direction:column;
-  justify-content:center;
-  align-items:center;
   max-width:600px;
 `
 export default class App extends Component {
@@ -25,18 +35,26 @@ export default class App extends Component {
     super(props);
     this.state={
       value:'',
+      display:false,
+      list:[
+      {
+        head:'Google搜尋引擎',
+        url:'google.com',
+        content:'this is goole website',
+      },
+      {
+        head:'Yahoo',
+        url:'yahoo.com',
+        content:'this is yahoo website',
+      }
+    ]
     }
     this.keyUp=this.keyUp.bind(this);
     this.onChange= this.onChange.bind(this);
     this.onSubmit= this.onSubmit.bind(this);
   }
   onSubmit(){
-    let message='';
-    const {value}=this.state;
-    value
-      ? message=`${value}`
-      : message=`error account or password is invalid`
-    alert(`${message}`)
+    this.setState({display:true})
   }
   onChange(event){
     const {value}= event.target; 
@@ -44,17 +62,16 @@ export default class App extends Component {
   }
   componentDidMount(){
     document.addEventListener("keyup", this.keyUp.bind(this)); 
-    axios({
-      method: 'post',
-      url: "http://localhost:9000/" + 'api/test',
-    })
-    .then((res)=>{
-      console.log(res)
-      this.setState({value:res.data.value})
-    })
-    .catch((error)=>{
-        console.log(error);
-    });
+    // axios({
+    //   method: 'post',
+    //   url: "http://localhost:9000/" + 'api/test',
+    // })
+    // .then((res)=>{
+    //   this.setState({value:res.data.value})
+    // })
+    // .catch((error)=>{
+    //     console.log(error);
+    // });
   }
   keyUp(e){
     if(e.keyCode==13)this.onSubmit();
@@ -64,7 +81,19 @@ export default class App extends Component {
       <div className="App">
       <header className="App-header">
         <Container >
-          <Input value={this.state.value} label="Search..." icon={StyledSearch} onChange={this.onChange}/>
+          <InputContainer display={this.state.display}>
+            <Input 
+              value={this.state.value} 
+              label="Search..." 
+              icon={StyledSearch} 
+              onChange={this.onChange}/>
+          </InputContainer>
+          <DashboardContainer 
+            display={this.state.display}>
+            <Dashboard 
+            list={this.state.list}/>
+          </DashboardContainer>
+         
         </Container>
       </header>
     </div>
