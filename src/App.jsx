@@ -35,26 +35,28 @@ export default class App extends Component {
     super(props);
     this.state={
       value:'',
+      total:'',
       display:false,
-      list:[
-      {
-        head:'Google搜尋引擎',
-        url:'google.com',
-        content:'this is goole website',
-      },
-      {
-        head:'Yahoo',
-        url:'yahoo.com',
-        content:'this is yahoo website',
-      }
-    ]
+      list:[]
     }
     this.keyUp=this.keyUp.bind(this);
     this.onChange= this.onChange.bind(this);
     this.onSubmit= this.onSubmit.bind(this);
   }
   onSubmit(){
-    this.setState({display:true})
+    axios({
+      method: 'get',
+      url: "http://localhost:9000/" + `api/search?query=${this.state.value}`,
+    })
+    .then((res)=>{
+      console.log(res)
+      this.setState({...res.data},
+        ()=>this.setState({display:true}));
+    })
+    .catch((error)=>{
+        console.log(error);
+    });
+    
   }
   onChange(event){
     const {value}= event.target; 

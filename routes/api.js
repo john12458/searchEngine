@@ -17,14 +17,22 @@ router.get('/search',function(req,res,next){
     index: 'search-index',
     body: {
       query: {
-        multi_match: { 
-          head:req.query.query,
+        multi_match: {
+          query:req.query.query,
+          fields: [ 'content','head','url' ]
         }
       }
     }
   }, (err, result) => {
+    const {hits} = result.body;
+    const response={
+      list : hits.hits.map(value=>value._source),
+      total : hits.total.value
+    }
+
     if (err) console.log(err)
-    else res.send(result.body.hits);
+    else res.send(response);
+    // else res.send(result.body);
   })
 });
 module.exports = router;
