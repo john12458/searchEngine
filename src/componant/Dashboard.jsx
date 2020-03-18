@@ -29,8 +29,10 @@ export default class Dashboard extends Component {
   }
   render() {
     return(
-      <Container display={this.props.display}>
-        { this.props.list.map((value,index)=>
+      <Container>
+        { this.props.total === 0 
+          ? <StyledDiv><h1>- 查無結果 -</h1></StyledDiv>
+          : this.props.list.map((value,index)=>
             <Board 
               value={value} key={index}/>)}
       </Container>

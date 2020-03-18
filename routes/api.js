@@ -24,15 +24,25 @@ router.get('/search',function(req,res,next){
       }
     }
   }, (err, result) => {
-    const {hits} = result.body;
-    const response={
-      list : hits.hits.map(value=>value._source),
-      total : hits.total.value
+    console.log("object")
+    if (err) {
+      console.log(err);
+      const response={
+        list : [],
+        total : 0,
+      }
+      res.send(response);
     }
-
-    if (err) console.log(err)
-    else res.send(response);
-    // else res.send(result.body);
+    else {
+        console.log(result.body)
+        const {hits} = result.body;
+        const response={
+          list : hits.hits.map(value=>value._source),
+          total : hits.total.value
+        }
+        console.log(response)
+        res.send(response);
+    }
   })
 });
 module.exports = router;

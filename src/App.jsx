@@ -36,7 +36,7 @@ export default class App extends Component {
     this.state={
       value:'',
       total:'',
-      display:false,
+      display:"false",
       list:[]
     }
     this.keyUp=this.keyUp.bind(this);
@@ -49,9 +49,8 @@ export default class App extends Component {
       url: "http://localhost:9000/" + `api/search?query=${this.state.value}`,
     })
     .then((res)=>{
-      console.log(res)
       this.setState({...res.data},
-        ()=>this.setState({display:true}));
+        ()=>this.setState({display:"true"}));
     })
     .catch((error)=>{
         console.log(error);
@@ -64,16 +63,6 @@ export default class App extends Component {
   }
   componentDidMount(){
     document.addEventListener("keyup", this.keyUp.bind(this)); 
-    // axios({
-    //   method: 'post',
-    //   url: "http://localhost:9000/" + 'api/test',
-    // })
-    // .then((res)=>{
-    //   this.setState({value:res.data.value})
-    // })
-    // .catch((error)=>{
-    //     console.log(error);
-    // });
   }
   keyUp(e){
     if(e.keyCode==13)this.onSubmit();
@@ -90,10 +79,11 @@ export default class App extends Component {
               icon={StyledSearch} 
               onChange={this.onChange}/>
           </InputContainer>
+        <p>{this.state.display=="true" && `搜尋結果：${this.state.total}筆`}</p>
           <DashboardContainer 
             display={this.state.display}>
             <Dashboard 
-            list={this.state.list}/>
+            list={this.state.list} total={this.state.total}/>
           </DashboardContainer>
          
         </Container>
