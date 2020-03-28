@@ -5,7 +5,7 @@ var cheerio = require('cheerio');
 
 var queue=[];
 var fetchcount = 0;
-var url = "https://www.npmjs.com"; 
+var url = "https://www.google.com"; 
 function checkReapeat(hashRes){
 	let repeated = false;
 	for (let index = 0; index < queue.length; index++) {
@@ -19,7 +19,7 @@ function checkReapeat(hashRes){
 }
 var crawler = Simplecrawler(url);
 crawler = Object.assign(crawler,crawlerConfig) // set Config into crawler
-// event emit
+// event emiter
 crawler.on("crawlstart",()=>
 			console.log("Crawl starting..."));
 crawler.on("complete",()=>
