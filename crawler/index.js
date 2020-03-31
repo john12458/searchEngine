@@ -2,10 +2,7 @@ var Simplecrawler = require('simplecrawler');
 var {parser,saveToElastic,md5Sign} = require('./helper');
 var {crawlerConfig} = require('./config');
 var cheerio = require('cheerio');
-
-var queue=[];
-var fetchcount = 0;
-var url = "https://www.google.com"; 
+ 
 function checkReapeat(hashRes){
 	let repeated = false;
 	for (let index = 0; index < queue.length; index++) {
@@ -17,7 +14,18 @@ function checkReapeat(hashRes){
 	}
 	return repeated;
 }
+class Crawler{
+	constructor(){
+		var queue=[];
+var fetchcount = 0;
+var url = "https://www.google.com";
+	}
+
+}
 var crawler = Simplecrawler(url);
+var queue=[];
+var fetchcount = 0;
+var url = "https://www.google.com";
 crawler = Object.assign(crawler,crawlerConfig) // set Config into crawler
 // event emiter
 crawler.on("crawlstart",()=>
