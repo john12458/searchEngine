@@ -1,3 +1,10 @@
+## Docker 
+> docker-compose up . -d
+
+> docker-compose exec elasticsearch elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.6.1/elasticsearch-analysis-ik-7.6.1.zip
+
+> docker-compose restart elasticsearch
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
